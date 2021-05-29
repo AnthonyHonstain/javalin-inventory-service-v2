@@ -3,10 +3,6 @@ This was an experimental project for me to play with Javalin and Kotlin.
 
 Toy microservice that models inventory information.
 
-**WARNING** - this was my first attempt and I did not construct any tests as I more than had my hand fulls getting
-Maven and Kotlin building and packaged into a Jar (I have historically always had trouble getting my Jar's constructed
-the way I like). 
-
 ## References
 * Kotlin https://kotlinlang.org/docs/home.html
 * Javalin https://javalin.io/
