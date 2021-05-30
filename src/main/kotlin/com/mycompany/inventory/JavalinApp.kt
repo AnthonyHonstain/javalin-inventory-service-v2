@@ -34,6 +34,11 @@ class JavalinApp {
     val graphiteRegistry = GraphiteMeterRegistry(graphiteConfig, Clock.SYSTEM, HierarchicalNameMapper.DEFAULT)
 
     val app = Javalin.create { config ->
+
+        graphiteRegistry.config().commonTags("application", "InventoryService")
+        JvmMemoryMetrics().bindTo(graphiteRegistry)
+        TimedHandler(graphiteRegistry, emptyList())
+
         config.registerPlugin(MicrometerPlugin(graphiteRegistry))
         //config.enableDevLogging()
         config.requestLogger { ctx, ms -> log.error("${ctx.status()} ${ctx.url()} time:$ms")}
@@ -41,12 +46,11 @@ class JavalinApp {
         post("/inventory", InventoryController::create)
         get("/inventory", InventoryController::getAll)
         get("/inventory/:locationId", InventoryController::get)
+        get("/inventory/:locationId/decorateProduct", InventoryController::getWithProduct)
         put("/inventory/:locationId", InventoryController::put)
     }
 
     fun start(port: Int) {
-        JvmMemoryMetrics().bindTo(graphiteRegistry)
-        TimedHandler(graphiteRegistry, emptyList())
         this.app.start(port)
     }
 

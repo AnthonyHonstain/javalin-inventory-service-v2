@@ -94,6 +94,18 @@
       <version>1.7.30</version>
     </dependency>
 
+
+    <!-- okhttp HTTP Client
+    https://square.github.io/okhttp/
+    https://github.com/square/okhttp
+    https://search.maven.org/artifact/com.squareup.okhttp3/okhttp/4.9.0/jar
+    -->
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>okhttp</artifactId>
+      <version>4.9.0</version>
+    </dependency>
+
     <!--
     I gave up on the built in BodyValidator logic, I just couldn't get it to work with
     the pattern of testing they recommended.
