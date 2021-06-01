@@ -9,8 +9,6 @@ import io.javalin.http.Context
 import io.javalin.http.InternalServerErrorResponse
 import io.javalin.http.NotFoundResponse
 import io.javalin.plugin.json.JavalinJson
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.valiktor.ConstraintViolationException
@@ -102,15 +100,14 @@ object InventoryController {
         ctx.json(result)
     }
 
+    val client = OkHttpClient()
+
     fun getWithProduct(ctx: Context) {
         val locationId = ctx.pathParam("locationId").toLong()
 
         val products: MutableSet<Long> = locationToProduct.getOrElse(locationId, {
             throw NotFoundResponse("There is no inventory for locationId:$locationId")
         })
-
-        val JSON: MediaType = "application/json; charset=utf-8".toMediaType()
-        val client = OkHttpClient()
 
         val result = mutableListOf<InventoryWithProduct>()
         for(product in products){
